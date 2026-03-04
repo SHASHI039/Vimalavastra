@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarees Collection – Vimalavastra</title>
+    <meta name="description"
+        content="Shop premium Indian silk sarees – Banarasi, Kanjivaram, Chanderi and more at Vimalavastra.">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <header class="site-header">
+                <nav class="nav-container">
+            <a href="index.html" class="logo-wrap">
+                <div class="logo-icon">V</div>
+                <div class="logo-text"><span class="brand-name">Vimalavastra</span><span class="tagline">Pure Indian
+                        Elegance</span></div>
+            </a>
+            <button class="hamburger"><span></span><span></span><span></span></button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sarees.html" class="active">Sarees</a></li>
+                <li><a href="dresses.html">Dresses</a></li>
+                <li><a href="sarees.html?filter=new">New Arrivals</a></li>
+                <li><a href="sarees.html?filter=sale">Offers</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <form class="search-form" onsubmit="handleSearch(event)"><input type="text"
+                        placeholder="Search..."><button type="submit">🔍</button></form>
+                <a href="login.html" class="nav-icon-btn">👤</a>
+                <a href="wishlist.html" class="nav-icon-btn">🤍<span class="badge wishlist-badge"></span></a>
+                <a href="cart.html" class="nav-icon-btn">🛒<span class="badge cart-badge"></span></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>Sarees Collection</h1>
+        <p>Explore our premium handcrafted silk sarees</p>
+        <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Sarees</span></div>
+    </div>
+
+    <section class="section">
+        <div class="section-inner">
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label>Sort by:</label>
+                    <select class="filter-select" id="sortBy">
+                        <option value="">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Top Rated</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Max Price:</label>
+                    <select class="filter-select" id="priceFilter">
+                        <option value="">All Prices</option>
+                        <option value="5000">Under ₹5,000</option>
+                        <option value="10000">Under ₹10,000</option>
+                        <option value="15000">Under ₹15,000</option>
+                    </select>
+                </div>
+                <div class="filter-tags" id="fabricTags">
+                    <span class="filter-tag active" data-fabric="">All</span>
+                    <span class="filter-tag" data-fabric="Banarasi Silk">Banarasi</span>
+                    <span class="filter-tag" data-fabric="Kanjivaram Silk">Kanjivaram</span>
+                    <span class="filter-tag" data-fabric="Chanderi Silk">Chanderi</span>
+                    <span class="filter-tag" data-fabric="Chanderi">Cotton</span>
+                </div>
+            </div>
+            <p id="resultCount" style="margin-bottom:16px;color:var(--text-light);font-size:14px;"></p>
+            <div class="product-grid" id="productGrid"></div>
+            <div id="emptyState" class="empty-state hidden">
+                <div class="icon">🔍</div>
+                <h3>No sarees found</h3>
+                <p>Try adjusting your filters.</p>
+                <a href="sarees.html" class="btn-primary">Clear Filters</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bottom">© 2026 <strong>Vimalavastra</strong>. All rights reserved.</div>
+    </footer>
+    <div id="toast" class="toast"></div>
+    <script src="js/products.js"></script>
+    <script>
+        let activeFabric = '';
+        let sortVal = '';
+        let maxPrice = '';
+
+        function renderProducts() {
+            let items = PRODUCTS.filter(p => p.category === 'sarees');
+            const params = new URLSearchParams(window.location.search);
+            const search = params.get('search');
+            const filter = params.get('filter');
+            const occasion = params.get('occasion');
+            if (search) items = items.filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || p.fabric.toLowerCase().includes(search.toLowerCase()));
+            if (filter === 'new') items = items.filter(p => p.badge === 'new');
+            if (filter === 'sale') items = items.filter(p => p.badge === 'sale');
+            if (occasion) items = items.filter(p => p.occasion && p.occasion.toLowerCase() === occasion.toLowerCase());
+            if (activeFabric) items = items.filter(p => p.fabric === activeFabric);
+            if (maxPrice) items = items.filter(p => p.price <= parseInt(maxPrice));
+            if (sortVal === 'price-low') items.sort((a, b) => a.price - b.price);
+            else if (sortVal === 'price-high') items.sort((a, b) => b.price - a.price);
+            else if (sortVal === 'rating') items.sort((a, b) => b.rating - a.rating);
+            const grid = document.getElementById('productGrid');
+            const empty = document.getElementById('emptyState');
+            const count = document.getElementById('resultCount');
+            count.textContent = `Showing ${items.length} saree${items.length !== 1 ? 's' : ''}`;
+            if (items.length === 0) { grid.innerHTML = ''; empty.classList.remove('hidden'); }
+            else { empty.classList.add('hidden'); grid.innerHTML = items.map(createProductCard).join(''); }
+        }
+
+        document.getElementById('sortBy').addEventListener('change', e => { sortVal = e.target.value; renderProducts(); });
+        document.getElementById('priceFilter').addEventListener('change', e => { maxPrice = e.target.value; renderProducts(); });
+        document.querySelectorAll('#fabricTags .filter-tag').forEach(t => {
+            t.addEventListener('click', () => {
+                document.querySelectorAll('#fabricTags .filter-tag').forEach(x => x.classList.remove('active'));
+                t.classList.add('active');
+                activeFabric = t.dataset.fabric;
+                renderProducts();
+            });
+        });
+        renderProducts();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details – Vimalavastra</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .reviews-section {
+            margin-top: 40px;
+        }
+
+        .review-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .review-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--gradient-royal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .review-meta .name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .review-meta .date {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .review-text {
+            font-size: 14px;
+            color: var(--text-mid);
+            line-height: 1.7;
+        }
+
+        .related-section {
+            background: var(--cream-dark);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+                <nav class="nav-container">
+            <a href="index.html" class="logo-wrap">
+                <div class="logo-icon">V</div>
+                <div class="logo-text"><span class="brand-name">Vimalavastra</span><span class="tagline">Pure Indian
+                        Elegance</span></div>
+            </a>
+            <button class="hamburger"><span></span><span></span><span></span></button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sarees.html">Sarees</a></li>
+                <li><a href="dresses.html">Dresses</a></li>
+                <li><a href="sarees.html?filter=new">New Arrivals</a></li>
+                <li><a href="sarees.html?filter=sale">Offers</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="login.html" class="nav-icon-btn">👤</a>
+                <a href="wishlist.html" class="nav-icon-btn">🤍<span class="badge wishlist-badge"></span></a>
+                <a href="cart.html" class="nav-icon-btn">🛒<span class="badge cart-badge"></span></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header" style="padding:40px 24px;">
+        <div class="breadcrumb" id="breadcrumb"></div>
+    </div>
+
+    <section class="section" style="padding-top:30px;">
+        <div class="section-inner">
+            <div class="product-detail-grid" id="productDetailGrid">
+                <div class="empty-state">
+                    <div class="icon">⏳</div>
+                    <p>Loading product...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reviews-section" style="background:var(--cream-dark);">
+        <div class="section-inner">
+            <h2 style="color:var(--maroon);margin-bottom:24px;font-size:1.6rem;">Customer Reviews</h2>
+            <div id="reviewsList"></div>
+        </div>
+    </section>
+
+    <section class="section related-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="eyebrow">You May Also Like</div>
+                <h2>Related Products</h2>
+                <div class="gold-divider"></div>
+            </div>
+            <div class="product-grid" id="relatedGrid"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bottom">© 2026 <strong>Vimalavastra</strong>. All rights reserved.</div>
+    </footer>
+    <div id="toast" class="toast"></div>
+    <script src="js/products.js"></script>
+    <script>
+        const REVIEWS = [
+            { name: "Sunita Verma", date: "Feb 2026", rating: 5, text: "Absolutely stunning! The quality is exceptional and it arrived perfectly packed. Will buy again.", init: "S" },
+            { name: "Divya Krishnan", date: "Jan 2026", rating: 5, text: "Beautiful product, exactly as shown in the pictures. The fabric is rich and the colors are vibrant.", init: "D" },
+            { name: "Rekha Patel", date: "Dec 2025", rating: 4, text: "Very good product. Delivery was fast and the packaging was premium. Highly recommend Vimalavastra!", init: "R" },
+        ];
+
+        function renderDetail() {
+            const id = parseInt(new URLSearchParams(window.location.search).get('id'));
+            const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
+
+            document.title = `${p.name} – Vimalavastra`;
+            document.getElementById('breadcrumb').innerHTML = `<a href="index.html">Home</a><span>/</span><a href="${p.category}.html">${p.category === 'sarees' ? 'Sarees' : 'Dresses'}</a><span>/</span><span>${p.name}</span>`;
+
+            const discount = p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
+            document.getElementById('productDetailGrid').innerHTML = `
+    <div class="product-gallery">
+      <div class="main-img"><img src="${p.image}" alt="${p.name}" id="mainImg"></div>
+      <div class="thumb-row">
+        <div class="thumb-img active" onclick="setImg('${p.image}',this)"><img src="${p.image}" alt="View 1"></div>
+        <div class="thumb-img" onclick="setImg('images/saree2.png',this)"><img src="images/saree2.png" alt="View 2"></div>
+        <div class="thumb-img" onclick="setImg('images/saree3.png',this)"><img src="images/saree3.png" alt="View 3"></div>
+      </div>
+    </div>
+    <div class="product-detail-info">
+      <div class="product-badge" style="position:static;display:inline-block;margin-bottom:12px;">${p.occasion}</div>
+      <h1>${p.name}</h1>
+      <div class="product-detail-rating">
+        <span class="stars">${renderStars(p.rating)}</span>
+        <span style="font-size:14px;color:var(--text-light);">${p.rating} (${p.reviews} reviews)</span>
+      </div>
+      <div class="product-detail-price">
+        ${formatPrice(p.price)}
+        ${p.oldPrice ? `<span class="price-old" style="font-size:1rem;font-weight:400;margin-left:10px;">${formatPrice(p.oldPrice)}</span> <span style="color:#2D7A4F;font-size:14px;font-weight:700;">${discount}% OFF</span>` : ''}
+      </div>
+      <p class="product-detail-desc">${p.desc}</p>
+      <div class="product-meta">
+        <div class="product-meta-row"><span class="meta-label">Fabric:</span><span class="meta-val">${p.fabric}</span></div>
+        <div class="product-meta-row"><span class="meta-label">Occasion:</span><span class="meta-val">${p.occasion}</span></div>
+        <div class="product-meta-row"><span class="meta-label">Category:</span><span class="meta-val">${p.category === 'sarees' ? 'Sarees' : 'Ethnic Dresses'}</span></div>
+        <div class="product-meta-row"><span class="meta-label">SKU:</span><span class="meta-val">VV-${String(p.id).padStart(4, '0')}</span></div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:600;color:var(--text-mid);margin-bottom:8px;">Available Colors:</div>
+        <div class="color-options">
+          ${p.colors.map((c, i) => `<div class="color-dot ${i === 0 ? 'active' : ''}" style="background:${c};" title="${c}" onclick="selectColor(this)"></div>`).join('')}
+        </div>
+      </div>
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:600;color:var(--text-mid);margin-bottom:8px;">Quantity:</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <span class="qty-num" id="qty">1</span>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+      <div class="detail-actions">
+        <button class="btn-cart-lg" onclick="addToCartQty(${p.id})">🛒 Add to Cart</button>
+        <a href="checkout.html" class="btn-buy" onclick="addToCartQty(${p.id})">⚡ Buy Now</a>
+        <button class="wishlist-btn" onclick="toggleWishlist(${p.id},this)" style="position:static;width:44px;height:44px;border-radius:10px;border:1.5px solid var(--border);" title="Wishlist">${isWishlisted(p.id) ? '❤️' : '🤍'}</button>
+      </div>
+      <div class="delivery-info">
+        <p>🚚 Free delivery on orders above ₹2000</p>
+        <p>⏱️ Estimated delivery: 5–7 business days</p>
+        <p>🔄 7-day easy return policy</p>
+        <p>✓ 100% authentic product guaranteed</p>
+      </div>
+    </div>`;
+
+            document.getElementById('reviewsList').innerHTML = REVIEWS.map(r => `
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">${r.init}</div>
+        <div class="review-meta"><div class="name">${r.name}</div><div class="date stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)} · ${r.date}</div></div>
+      </div>
+      <p class="review-text">${r.text}</p>
+    </div>`).join('');
+
+            const related = PRODUCTS.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
+            document.getElementById('relatedGrid').innerHTML = related.map(createProductCard).join('');
+        }
+
+        function setImg(src, el) {
+            document.getElementById('mainImg').src = src;
+            document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
+        function selectColor(el) {
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            el.classList.add('active');
+        }
+        let qty = 1;
+        function changeQty(d) { qty = Math.max(1, qty + d); document.getElementById('qty').textContent = qty; }
+        function addToCartQty(id) {
+            for (let i = 0; i < qty; i++) addToCart(id);
+        }
+        renderDetail();
+    </script>
+</body>
+
+</html>

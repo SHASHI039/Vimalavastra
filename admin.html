@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard – Vimalavastra</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <header class="site-header">
+                <nav class="nav-container">
+            <a href="index.html" class="logo-wrap">
+                <div class="logo-icon">V</div>
+                <div class="logo-text"><span class="brand-name">Vimalavastra</span><span class="tagline">Admin
+                        Dashboard</span></div>
+            </a>
+            <div class="nav-actions">
+                <a href="index.html" class="btn-outline" style="font-size:12px;padding:8px 16px;">← View Store</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="sidebar-brand">
+                <p style="color:rgba(255,255,255,0.5);font-size:11px;text-transform:uppercase;letter-spacing:1px;">
+                    Navigation</p>
+            </div>
+            <button class="admin-nav-item active" onclick="showPage('dashboard')"><span class="icon">📊</span>
+                Dashboard</button>
+            <button class="admin-nav-item" onclick="showPage('products')"><span class="icon">🏷️</span>
+                Products</button>
+            <button class="admin-nav-item" onclick="showPage('addProduct')"><span class="icon">➕</span> Add
+                Product</button>
+            <button class="admin-nav-item" onclick="showPage('orders')"><span class="icon">📦</span> Orders</button>
+            <button class="admin-nav-item" onclick="showPage('customers')"><span class="icon">👥</span>
+                Customers</button>
+            <button class="admin-nav-item" onclick="showPage('inventory')"><span class="icon">📋</span>
+                Inventory</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-content">
+            <!-- Dashboard -->
+            <div class="admin-page active" id="page-dashboard">
+                <h2>Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <div class="num">₹2,45,800</div>
+                            <div class="lbl">Total Revenue</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-left-color:var(--maroon);">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-info">
+                            <div class="num">148</div>
+                            <div class="lbl">Total Orders</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-left-color:#2D7A4F;">
+                        <div class="stat-icon">🏷️</div>
+                        <div class="stat-info">
+                            <div class="num">6</div>
+                            <div class="lbl">Products</div>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-left-color:#1a237e;">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <div class="num">1,247</div>
+                            <div class="lbl">Customers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-table">
+                    <h3
+                        style="padding:16px;font-size:1rem;color:var(--maroon);border-bottom:1px solid var(--border);margin:0;">
+                        Recent Orders</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#VV00148</td>
+                                <td>Priya Sharma</td>
+                                <td>Royal Maroon Banarasi Saree</td>
+                                <td>₹8,499</td>
+                                <td><span class="badge-status delivered">Delivered</span></td>
+                            </tr>
+                            <tr>
+                                <td>#VV00147</td>
+                                <td>Ananya Reddy</td>
+                                <td>Crimson Bridal Lehenga</td>
+                                <td>₹18,999</td>
+                                <td><span class="badge-status processing">Processing</span></td>
+                            </tr>
+                            <tr>
+                                <td>#VV00146</td>
+                                <td>Meenakshi Iyer</td>
+                                <td>Sapphire Blue Kanjivaram</td>
+                                <td>₹10,999</td>
+                                <td><span class="badge-status delivered">Delivered</span></td>
+                            </tr>
+                            <tr>
+                                <td>#VV00145</td>
+                                <td>Supriya Joshi</td>
+                                <td>Pink Chanderi Silk Saree</td>
+                                <td>₹5,999</td>
+                                <td><span class="badge-status pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>#VV00144</td>
+                                <td>Kavitha Nair</td>
+                                <td>Purple Anarkali Suit</td>
+                                <td>₹6,499</td>
+                                <td><span class="badge-status cancelled">Cancelled</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Products -->
+            <div class="admin-page" id="page-products">
+                <h2>Manage Products</h2>
+                <div class="admin-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Add Product -->
+            <div class="admin-page" id="page-addProduct">
+                <h2>Add New Product</h2>
+                <div class="add-product-form">
+                    <form onsubmit="saveProduct(event)">
+                        <div class="form-grid">
+                            <div class="form-group"><label>Product Name *</label><input type="text" required
+                                    placeholder="e.g. Pink Chanderi Saree"></div>
+                            <div class="form-group"><label>Category *</label>
+                                <select required>
+                                    <option value="sarees">Sarees</option>
+                                    <option value="dresses">Dresses</option>
+                                </select>
+                            </div>
+                            <div class="form-group"><label>Fabric / Type *</label><input type="text" required
+                                    placeholder="e.g. Pure Silk"></div>
+                            <div class="form-group"><label>Occasion</label><input type="text"
+                                    placeholder="Wedding, Festival, Casual"></div>
+                            <div class="form-group"><label>Selling Price (₹) *</label><input type="number" required
+                                    min="100" placeholder="8499"></div>
+                            <div class="form-group"><label>Original Price (₹)</label><input type="number"
+                                    placeholder="12000"></div>
+                            <div class="form-group"><label>Rating</label><input type="number" min="1" max="5" step="0.1"
+                                    placeholder="4.8"></div>
+                            <div class="form-group"><label>Stock Quantity</label><input type="number" min="0"
+                                    placeholder="50"></div>
+                            <div class="form-group" style="grid-column:1/-1;"><label>Product Image URL</label><input
+                                    type="url" placeholder="https://example.com/image.jpg"></div>
+                            <div class="form-group" style="grid-column:1/-1;"><label>Description</label><textarea
+                                    rows="4"
+                                    placeholder="Describe the product — fabric details, craftsmanship, care instructions..."></textarea>
+                            </div>
+                            <div class="form-group" style="grid-column:1/-1;"><label>Tags (comma
+                                    separated)</label><input type="text" placeholder="silk, wedding, zari, kanchi">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-save">💾 Save Product</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Orders -->
+            <div class="admin-page" id="page-orders">
+                <h2>All Orders</h2>
+                <div class="admin-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#VV00148</td>
+                                <td>Mar 4, 2026</td>
+                                <td>Priya Sharma</td>
+                                <td>1 item</td>
+                                <td>₹8,499</td>
+                                <td><span class="badge-status delivered">Delivered</span></td>
+                                <td><button class="btn-edit">📋 View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#VV00147</td>
+                                <td>Mar 3, 2026</td>
+                                <td>Ananya Reddy</td>
+                                <td>2 items</td>
+                                <td>₹25,498</td>
+                                <td><span class="badge-status processing">Processing</span></td>
+                                <td><button class="btn-edit">📋 View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#VV00146</td>
+                                <td>Mar 2, 2026</td>
+                                <td>Meenakshi Iyer</td>
+                                <td>1 item</td>
+                                <td>₹10,999</td>
+                                <td><span class="badge-status delivered">Delivered</span></td>
+                                <td><button class="btn-edit">📋 View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#VV00145</td>
+                                <td>Mar 1, 2026</td>
+                                <td>Supriya Joshi</td>
+                                <td>1 item</td>
+                                <td>₹5,999</td>
+                                <td><span class="badge-status pending">Pending</span></td>
+                                <td><button class="btn-edit">📋 View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#VV00144</td>
+                                <td>Feb 28, 2026</td>
+                                <td>Kavitha Nair</td>
+                                <td>1 item</td>
+                                <td>₹6,499</td>
+                                <td><span class="badge-status cancelled">Cancelled</span></td>
+                                <td><button class="btn-edit">📋 View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Customers -->
+            <div class="admin-page" id="page-customers">
+                <h2>Customer Database</h2>
+                <div class="admin-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Total Orders</th>
+                                <th>Total Spent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Priya Sharma</td>
+                                <td>priya@example.com</td>
+                                <td>+91 98765 43210</td>
+                                <td>12</td>
+                                <td>₹1,02,450</td>
+                            </tr>
+                            <tr>
+                                <td>Ananya Reddy</td>
+                                <td>ananya@example.com</td>
+                                <td>+91 87654 32109</td>
+                                <td>8</td>
+                                <td>₹78,200</td>
+                            </tr>
+                            <tr>
+                                <td>Meenakshi Iyer</td>
+                                <td>meena@example.com</td>
+                                <td>+91 76543 21098</td>
+                                <td>15</td>
+                                <td>₹1,45,600</td>
+                            </tr>
+                            <tr>
+                                <td>Supriya Joshi</td>
+                                <td>supriya@example.com</td>
+                                <td>+91 65432 10987</td>
+                                <td>3</td>
+                                <td>₹22,000</td>
+                            </tr>
+                            <tr>
+                                <td>Kavitha Nair</td>
+                                <td>kavitha@example.com</td>
+                                <td>+91 54321 09876</td>
+                                <td>6</td>
+                                <td>₹54,800</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Inventory -->
+            <div class="admin-page" id="page-inventory">
+                <h2>Inventory Management</h2>
+                <div class="admin-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="js/products.js"></script>
+    <script>
+        function showPage(id) {
+            document.querySelectorAll('.admin-page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.admin-nav-item').forEach(b => b.classList.remove('active'));
+            document.getElementById('page-' + id).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function renderAdminTables() {
+            const tb = document.getElementById('productTable');
+            if (tb) tb.innerHTML = PRODUCTS.map(p => `
+    <tr>
+      <td>VV-${String(p.id).padStart(4, '0')}</td>
+      <td><strong>${p.name}</strong></td>
+      <td>${p.category}</td>
+      <td>${formatPrice(p.price)}</td>
+      <td>In Stock</td>
+      <td>
+        <button class="btn-edit" onclick="showToast('Edit feature coming soon')">✏️ Edit</button>
+        <button class="btn-delete" onclick="showToast('Delete feature coming soon')">🗑️</button>
+      </td>
+    </tr>`).join('');
+
+            const inv = document.getElementById('inventoryTable');
+            if (inv) inv.innerHTML = PRODUCTS.map((p, i) => {
+                const stock = [45, 12, 8, 33, 5, 22][i];
+                const status = stock <= 5 ? '<span class="badge-status cancelled">Low Stock</span>' : '<span class="badge-status delivered">In Stock</span>';
+                return `<tr><td>${p.name}</td><td>VV-${String(p.id).padStart(4, '0')}</td><td>${stock} units</td><td>${status}</td><td><button class="btn-edit" onclick="showToast('Updated!')">↑ Restock</button></td></tr>`;
+            }).join('');
+        }
+
+        function saveProduct(e) {
+            e.preventDefault();
+            showToast('Product saved successfully! ✓');
+            e.target.reset();
+        }
+
+        renderAdminTables();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist – Vimalavastra</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <header class="site-header">
+                <nav class="nav-container">
+            <a href="index.html" class="logo-wrap">
+                <div class="logo-icon">V</div>
+                <div class="logo-text"><span class="brand-name">Vimalavastra</span><span class="tagline">Pure Indian
+                        Elegance</span></div>
+            </a>
+            <button class="hamburger"><span></span><span></span><span></span></button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sarees.html">Sarees</a></li>
+                <li><a href="dresses.html">Dresses</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="login.html" class="nav-icon-btn">👤</a>
+                <a href="wishlist.html" class="nav-icon-btn" style="color:var(--gold);">❤️<span
+                        class="badge wishlist-badge"></span></a>
+                <a href="cart.html" class="nav-icon-btn">🛒<span class="badge cart-badge"></span></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>My Wishlist</h1>
+        <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Wishlist</span></div>
+    </div>
+
+    <section class="section">
+        <div class="section-inner">
+            <div id="emptyWishlist" class="empty-state hidden">
+                <div class="icon">🤍</div>
+                <h3>Your wishlist is empty</h3>
+                <p>Save your favourite sarees and dresses here!</p>
+                <a href="sarees.html" class="btn-primary">Browse Products</a>
+            </div>
+            <div class="product-grid" id="wishlistGrid"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bottom">© 2026 <strong>Vimalavastra</strong>. All rights reserved.</div>
+    </footer>
+    <div id="toast" class="toast"></div>
+    <script src="js/products.js"></script>
+    <script>
+        function renderWishlist() {
+            const w = getWishlist();
+            const grid = document.getElementById('wishlistGrid');
+            const empty = document.getElementById('emptyWishlist');
+            if (!w.length) { empty.classList.remove('hidden'); grid.innerHTML = ''; return; }
+            empty.classList.add('hidden');
+            const items = PRODUCTS.filter(p => w.includes(p.id));
+            grid.innerHTML = items.map(createProductCard).join('');
+        }
+        renderWishlist();
+    </script>
+</body>
+
+</html>

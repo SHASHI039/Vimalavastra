@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart – Vimalavastra</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <header class="site-header">
+                <nav class="nav-container">
+            <a href="index.html" class="logo-wrap">
+                <div class="logo-icon">V</div>
+                <div class="logo-text"><span class="brand-name">Vimalavastra</span><span class="tagline">Pure Indian
+                        Elegance</span></div>
+            </a>
+            <button class="hamburger"><span></span><span></span><span></span></button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sarees.html">Sarees</a></li>
+                <li><a href="dresses.html">Dresses</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="login.html" class="nav-icon-btn">👤</a>
+                <a href="wishlist.html" class="nav-icon-btn">🤍<span class="badge wishlist-badge"></span></a>
+                <a href="cart.html" class="nav-icon-btn">🛒<span class="badge cart-badge"></span></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>Shopping Cart</h1>
+        <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Cart</span></div>
+    </div>
+
+    <section class="section">
+        <div class="section-inner">
+            <div id="emptyCart" class="empty-state hidden">
+                <div class="icon">🛒</div>
+                <h3>Your cart is empty</h3>
+                <p>Add some beautiful sarees and dresses to get started!</p>
+                <a href="sarees.html" class="btn-primary">Shop Now</a>
+            </div>
+            <div id="cartContent" class="cart-layout hidden">
+                <div class="cart-items" id="cartItems"></div>
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row"><span class="label">Subtotal</span><span class="value"
+                            id="subtotal">₹0</span></div>
+                    <div class="summary-row"><span class="label">Shipping</span><span class="value"
+                            id="shipping">FREE</span></div>
+                    <hr class="summary-divider">
+                    <div class="summary-row"><span class="label summary-total">Total</span><span
+                            class="value summary-total" id="total">₹0</span></div>
+                    <a href="checkout.html" class="btn-checkout"
+                        style="display:block;text-align:center;text-decoration:none;margin-top:12px;">Proceed to
+                        Checkout →</a>
+                    <a href="sarees.html"
+                        style="display:block;text-align:center;font-size:13px;color:var(--text-mid);margin-top:12px;text-decoration:none;">←
+                        Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bottom">© 2026 <strong>Vimalavastra</strong>. All rights reserved.</div>
+    </footer>
+    <div id="toast" class="toast"></div>
+    <script src="js/products.js"></script>
+    <script>
+        function renderCart() {
+            const cart = getCart();
+            const empty = document.getElementById('emptyCart');
+            const content = document.getElementById('cartContent');
+            if (!cart.length) { empty.classList.remove('hidden'); content.classList.add('hidden'); return; }
+            empty.classList.add('hidden'); content.classList.remove('hidden');
+
+            document.getElementById('cartItems').innerHTML = cart.map(item => {
+                const p = PRODUCTS.find(x => x.id === item.id);
+                if (!p) return '';
+                return `
+    <div class="cart-item" id="item-${p.id}">
+      <img class="cart-item-img" src="${p.image}" alt="${p.name}">
+      <div>
+        <div class="cart-item-name"><a href="product.html?id=${p.id}" style="text-decoration:none;color:inherit;">${p.name}</a></div>
+        <div class="cart-item-meta">${p.fabric} · ${p.occasion}</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(${p.id},-1)">−</button>
+          <span class="qty-num" id="qty-${p.id}">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${p.id},1)">+</button>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="cart-item-price">${formatPrice(p.price * item.qty)}</div>
+        <button class="remove-btn mt-3" onclick="removeItem(${p.id})">🗑️ Remove</button>
+      </div>
+    </div>`;
+            }).join('');
+            updateTotals();
+        }
+
+        function changeQty(id, d) {
+            let cart = getCart();
+            const item = cart.find(x => x.id === id);
+            if (!item) return;
+            item.qty = Math.max(1, item.qty + d);
+            saveCart(cart); renderCart(); updateCartBadges();
+        }
+
+        function removeItem(id) {
+            let cart = getCart().filter(x => x.id !== id);
+            saveCart(cart); renderCart(); updateCartBadges();
+            showToast('Item removed from cart');
+        }
+
+        function updateTotals() {
+            const cart = getCart();
+            const subtotal = cart.reduce((sum, item) => {
+                const p = PRODUCTS.find(x => x.id === item.id);
+                return sum + (p ? p.price * item.qty : 0);
+            }, 0);
+            const shipping = subtotal >= 2000 ? 0 : 99;
+            const total = subtotal + shipping;
+            document.getElementById('subtotal').textContent = formatPrice(subtotal);
+            document.getElementById('shipping').textContent = shipping === 0 ? 'FREE' : formatPrice(shipping);
+            document.getElementById('total').textContent = formatPrice(total);
+        }
+
+        renderCart();
+    </script>
+</body>
+
+</html>

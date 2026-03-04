@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vimalavastra – Premium Indian Ethnic Fashion</title>
+<meta name="description" content="Vimalavastra offers premium Indian ethnic wear – sarees, lehengas, and dresses for weddings, festivals, and special occasions.">
+<link rel="stylesheet" href="styles/main.css">
+<style>
+.festive-banner{background:var(--cream-dark);padding:70px 24px;}
+.festive-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:30px;}
+.fest-card{border-radius:16px;overflow:hidden;position:relative;text-decoration:none;display:block;box-shadow:0 4px 24px var(--shadow);transition:var(--transition);}
+.fest-card:hover{transform:translateY(-4px);}
+.fest-card img{width:100%;height:260px;object-fit:cover;display:block;}
+.fest-card-body{position:absolute;inset:0;background:linear-gradient(to top,rgba(123,24,38,.85) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;}
+.fest-card-body h3{color:var(--white);font-size:1.5rem;margin-bottom:6px;}
+.fest-card-body p{color:var(--gold-light);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.feat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:30px;}
+.feat-item{display:flex;align-items:center;gap:14px;background:var(--white);border-radius:12px;padding:16px;box-shadow:0 2px 10px var(--shadow);}
+.feat-item .icon{font-size:28px;}
+.feat-item h4{font-size:14px;color:var(--text-dark);margin-bottom:2px;}
+.feat-item p{font-size:12px;color:var(--text-light);}
+@media(max-width:768px){.festive-inner{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header" id="siteHeader">
+    <nav class="nav-container">
+    <a href="index.html" class="logo-wrap">
+      <div class="logo-icon">V</div>
+      <div class="logo-text">
+        <span class="brand-name">Vimalavastra</span>
+        <span class="tagline">Pure Indian Elegance</span>
+      </div>
+    </a>
+    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-menu">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="sarees.html">Sarees</a></li>
+      <li><a href="dresses.html">Dresses</a></li>
+      <li><a href="sarees.html?filter=new">New Arrivals</a></li>
+      <li><a href="sarees.html?filter=sale">Offers</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <form class="search-form" onsubmit="handleSearch(event)">
+        <input type="text" placeholder="Search sarees...">
+        <button type="submit">🔍</button>
+      </form>
+      <a href="login.html" class="nav-icon-btn" title="Login">👤</a>
+      <a href="wishlist.html" class="nav-icon-btn" title="Wishlist">
+        🤍<span class="badge wishlist-badge"></span>
+      </a>
+      <a href="cart.html" class="nav-icon-btn" title="Cart">
+        🛒<span class="badge cart-badge"></span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="eyebrow">✦ New Festive Collection 2026 ✦</span>
+      <h1>Elegance in Every <span>Thread &amp; Weave</span></h1>
+      <p>Discover handcrafted Indian ethnic wear — from rich silk sarees to stunning lehengas — curated for weddings, festivals, and special celebrations.</p>
+      <div class="hero-btns">
+        <a href="sarees.html" class="btn-primary">Explore Sarees</a>
+        <a href="dresses.html" class="btn-outline">View Dresses</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="num">5000+</div><div class="lbl">Sarees</div></div>
+        <div class="stat"><div class="num">50K+</div><div class="lbl">Customers</div></div>
+        <div class="stat"><div class="num">4.9★</div><div class="lbl">Rating</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-img-grid">
+        <div class="hero-img"><img src="images/saree1.png" alt="Maroon Silk Saree"></div>
+        <div class="hero-img"><img src="images/saree2.png" alt="Blue Banarasi Saree"></div>
+        <div class="hero-img"><img src="images/dress1.png" alt="Bridal Lehenga"></div>
+        <div class="hero-img"><img src="images/saree3.png" alt="Pink Saree"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="section" style="background:var(--white);padding:30px 24px;">
+  <div class="section-inner">
+    <div class="feat-row">
+      <div class="feat-item"><div class="icon">🚚</div><div><h4>Free Delivery</h4><p>On orders above ₹2000</p></div></div>
+      <div class="feat-item"><div class="icon">🔄</div><div><h4>Easy Returns</h4><p>7-day return policy</p></div></div>
+      <div class="feat-item"><div class="icon">🔒</div><div><h4>Secure Payments</h4><p>UPI, Cards, Net Banking</p></div></div>
+      <div class="feat-item"><div class="icon">💎</div><div><h4>Authentic Products</h4><p>100% genuine ethnic wear</p></div></div>
+      <div class="feat-item"><div class="icon">📦</div><div><h4>Gift Wrapping</h4><p>Premium packaging available</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="section categories">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Browse by Category</div>
+      <h2>Shop Our Collections</h2>
+      <p>From timeless silk sarees to modern ethnic dresses, find your perfect look for every occasion.</p>
+      <div class="gold-divider"></div>
+    </div>
+    <div class="cat-grid">
+      <a href="sarees.html?cat=banarasi" class="cat-card">
+        <img src="images/saree1.png" alt="Banarasi Sarees">
+        <div class="cat-card-overlay"><h3>Banarasi Sarees</h3><span>200+ Designs</span></div>
+      </a>
+      <a href="sarees.html?cat=kanjivaram" class="cat-card">
+        <img src="images/saree2.png" alt="Kanjivaram Sarees">
+        <div class="cat-card-overlay"><h3>Kanjivaram Silk</h3><span>150+ Designs</span></div>
+      </a>
+      <a href="dresses.html?cat=lehenga" class="cat-card">
+        <img src="images/dress1.png" alt="Bridal Lehengas">
+        <div class="cat-card-overlay"><h3>Bridal Lehengas</h3><span>80+ Designs</span></div>
+      </a>
+      <a href="dresses.html?cat=anarkali" class="cat-card">
+        <img src="images/dress2.png" alt="Anarkali Suits">
+        <div class="cat-card-overlay"><h3>Anarkali Suits</h3><span>120+ Designs</span></div>
+      </a>
+      <a href="sarees.html?cat=chanderi" class="cat-card">
+        <img src="images/saree3.png" alt="Chanderi Sarees">
+        <div class="cat-card-overlay"><h3>Chanderi Sarees</h3><span>90+ Designs</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="section" style="background:var(--cream-dark);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">🔥 Top Picks</div>
+      <h2>Featured Products</h2>
+      <p>The most loved pieces from our curated collection, handpicked for you.</p>
+      <div class="gold-divider"></div>
+    </div>
+    <div class="product-grid" id="featuredProducts"></div>
+    <div class="text-center mt-4" style="margin-top:36px;">
+      <a href="sarees.html" class="btn-primary">View All Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- Promo Banner -->
+<section class="section" style="background:var(--white);">
+  <div class="section-inner">
+    <div class="promo-banner">
+      <div class="promo-text">
+        <h2>Festive Season Sale 🎊</h2>
+        <p>Celebrate this season in style with our exclusive collection</p>
+        <div class="offer mt-3">Upto 40% OFF on all orders above ₹5000</div>
+      </div>
+      <a href="sarees.html?filter=sale" class="btn-primary" style="font-size:15px;padding:16px 36px;">Shop the Sale</a>
+    </div>
+  </div>
+</section>
+
+<!-- Festive Collections -->
+<section class="festive-banner">
+  <div class="section-header">
+    <div class="eyebrow">Special Collections</div>
+    <h2>Shop by Occasion</h2>
+    <div class="gold-divider"></div>
+  </div>
+  <div class="festive-inner">
+    <a href="sarees.html?occasion=wedding" class="fest-card">
+      <img src="images/saree1.png" alt="Wedding Collection">
+      <div class="fest-card-body"><h3>Wedding Collection</h3><p>Bridal & Family Wear</p></div>
+    </a>
+    <a href="sarees.html?occasion=festival" class="fest-card">
+      <img src="images/saree3.png" alt="Festival Collection">
+      <div class="fest-card-body"><h3>Festival Specials</h3><p>Diwali, Navratri & More</p></div>
+    </a>
+    <a href="dresses.html?occasion=party" class="fest-card">
+      <img src="images/dress2.png" alt="Party Wear">
+      <div class="fest-card-body"><h3>Party Wear</h3><p>Elegant Evening Looks</p></div>
+    </a>
+    <a href="sarees.html?occasion=casual" class="fest-card">
+      <img src="images/saree4.png" alt="Casual Ethnic">
+      <div class="fest-card-body"><h3>Casual Ethnic</h3><p>Everyday Elegance</p></div>
+    </a>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section testimonials">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">What Our Customers Say</div>
+      <h2>Loved by Thousands</h2>
+      <div class="gold-divider"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Absolutely stunning Banarasi saree! The quality is unmatched and the gold zari work is breathtaking. Got so many compliments at my cousin's wedding. Vimalavastra never disappoints!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">P</div>
+          <div><div class="author-name">Priya Sharma</div><div class="author-loc stars">★★★★★ · Mumbai</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"The lehenga I ordered for my reception was absolutely gorgeous. Perfect stitching, rich fabric, and delivered on time. The packaging was also very premium. Highly recommended!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div><div class="author-name">Ananya Reddy</div><div class="author-loc stars">★★★★★ · Hyderabad</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Best online saree store! The Kanjivaram I bought was genuinely authentic — the weight, sheen, and zari work are exactly as shown. Will definitely order again for Navratri!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div><div class="author-name">Meenakshi Iyer</div><div class="author-loc stars">★★★★★ · Chennai</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo-wrap" style="margin-bottom:4px;">
+        <div class="logo-icon">V</div>
+        <div class="logo-text"><span class="brand-name">Vimalavastra</span></div>
+      </div>
+      <p>Your destination for premium Indian ethnic wear. Handpicked sarees, lehengas, and dresses for every celebration — crafted with love and tradition.</p>
+      <div class="social-links">
+        <a href="#" class="social-link" title="Facebook">📘</a>
+        <a href="#" class="social-link" title="Instagram">📸</a>
+        <a href="https://wa.me/919876543210" class="social-link" title="WhatsApp">💬</a>
+        <a href="#" class="social-link" title="YouTube">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="sarees.html">All Sarees</a></li>
+        <li><a href="dresses.html">All Dresses</a></li>
+        <li><a href="sarees.html?filter=new">New Arrivals</a></li>
+        <li><a href="sarees.html?filter=sale">Sale & Offers</a></li>
+        <li><a href="sarees.html?occasion=wedding">Bridal Wear</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <ul>
+        <li><a href="login.html">Login / Register</a></li>
+        <li><a href="cart.html">My Cart</a></li>
+        <li><a href="wishlist.html">Wishlist</a></li>
+        <li><a href="orders.html">Track Orders</a></li>
+        <li><a href="admin.html">Admin Panel</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Return Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 <strong>Vimalavastra</strong>. All rights reserved. Made with ❤️ in India
+  </div>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script src="js/products.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('featuredProducts');
+  if(grid) {
+    grid.innerHTML = PRODUCTS.map(p => createProductCard(p)).join('');
+  }
+});
+</script>
+</body>
+</html>

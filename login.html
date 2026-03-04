@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register – Vimalavastra</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <header class="site-header">
+                <nav class="nav-container">
+            <a href="index.html" class="logo-wrap">
+                <div class="logo-icon">V</div>
+                <div class="logo-text"><span class="brand-name">Vimalavastra</span><span class="tagline">Pure Indian
+                        Elegance</span></div>
+            </a>
+            <div class="nav-actions">
+                <a href="cart.html" class="nav-icon-btn">🛒<span class="badge cart-badge"></span></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div style="text-align:center;margin-bottom:20px;">
+                <div
+                    style="width:60px;height:60px;background:var(--gradient-royal);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:26px;color:var(--gold-light);font-family:'Playfair Display',serif;font-weight:700;">
+                    V</div>
+                <h2>Welcome Back</h2>
+                <p>Sign in to your Vimalavastra account</p>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="loginTab" onclick="switchTab('login')">Sign In</button>
+                <button class="auth-tab" id="registerTab" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="doLogin(event)">
+                <div class="form-input-wrap"><input type="email" required placeholder="Email Address"
+                        autocomplete="email"></div>
+                <div class="form-input-wrap"><input type="password" required placeholder="Password"
+                        autocomplete="current-password"></div>
+                <div style="text-align:right;margin:-8px 0 16px;"><a href="#"
+                        style="font-size:12px;color:var(--gold-dark);text-decoration:none;">Forgot Password?</a></div>
+                <button type="submit" class="btn-auth">Sign In</button>
+                <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--text-light);">Demo: any email &
+                    password works</p>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="hidden" onsubmit="doRegister(event)">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                    <div class="form-input-wrap" style="margin-bottom:0;"><input type="text" required
+                            placeholder="First Name"></div>
+                    <div class="form-input-wrap" style="margin-bottom:0;"><input type="text" required
+                            placeholder="Last Name"></div>
+                </div>
+                <div class="form-input-wrap" style="margin-top:10px;"><input type="tel" required
+                        placeholder="Phone Number"></div>
+                <div class="form-input-wrap"><input type="email" required placeholder="Email Address"></div>
+                <div class="form-input-wrap"><input type="password" required placeholder="Create Password"
+                        minlength="6"></div>
+                <div class="form-input-wrap"><input type="password" required placeholder="Confirm Password"></div>
+                <button type="submit" class="btn-auth">Create Account</button>
+            </form>
+
+            <div style="margin-top:20px;display:flex;align-items:center;gap:12px;">
+                <hr style="flex:1;border:1px solid var(--border);">
+                <span style="font-size:12px;color:var(--text-light);">or continue with</span>
+                <hr style="flex:1;border:1px solid var(--border);">
+            </div>
+            <div style="display:flex;gap:10px;margin-top:14px;">
+                <button onclick="socialLogin()"
+                    style="flex:1;padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--white);cursor:pointer;font-size:13px;">📧
+                    Google</button>
+                <button onclick="socialLogin()"
+                    style="flex:1;padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--white);cursor:pointer;font-size:13px;">📘
+                    Facebook</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="js/products.js"></script>
+    <script>
+        function switchTab(tab) {
+            document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+            document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
+            document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+            document.getElementById('registerTab').classList.toggle('active', tab === 'register');
+        }
+        function doLogin(e) {
+            e.preventDefault();
+            localStorage.setItem('vv_user', JSON.stringify({ name: 'Customer', loggedIn: true }));
+            showToast('Welcome back! Signed in successfully ✓');
+            setTimeout(() => window.location.href = 'index.html', 1500);
+        }
+        function doRegister(e) {
+            e.preventDefault();
+            localStorage.setItem('vv_user', JSON.stringify({ name: 'New Customer', loggedIn: true }));
+            showToast('Account created! Welcome to Vimalavastra 🎉');
+            setTimeout(() => window.location.href = 'index.html', 1500);
+        }
+        function socialLogin() {
+            localStorage.setItem('vv_user', JSON.stringify({ name: 'Customer', loggedIn: true }));
+            showToast('Signed in successfully ✓');
+            setTimeout(() => window.location.href = 'index.html', 1500);
+        }
+    </script>
+</body>
+
+</html>
